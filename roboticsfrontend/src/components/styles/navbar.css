@@ -1,0 +1,55 @@
+/* Navbar Styles */
+.custom-navbar {
+    background: #00bfff;
+    /* Dark transparent background */
+    padding: 15px 0;
+  }
+  
+  /* Navbar Brand */
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color:black !important;
+  }
+  
+  /* Navbar Links */
+  .navbar-nav .nav-link {
+    color: black !important;
+    font-size: 1rem;
+    margin: 0 15px;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color:black !important; /* Highlight effect */
+  }
+  
+  /* Buttons */
+  .custom-btn {
+    background: #00bfff;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 30px; /* Rounded shape */
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .custom-btn:hover {
+    background: white;
+    color: #00bfff;
+    border: 1px solid #00bfff;
+  }
+  
+  /* Mobile Styling */
+  @media (max-width: 991px) {
+    .navbar-nav {
+      text-align: center;
+    }
+    
+    .custom-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  
