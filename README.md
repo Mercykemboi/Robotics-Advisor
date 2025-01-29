@@ -7,7 +7,7 @@ A RoboAdvisor is an automated platform that provides financial planning services
 
 
 ## *Feaatures**
-### *Core Functionalities**
+### **Core Functionalities**
 -	User Authentication & Profiles: Secure sign-up/login with user profiles detailing financial goals and risk tolerance.
 -	Portfolio Management: Automated asset allocation based on user profiles.
 -	Market Data Integration: Fetch real-time or simulated market data to adjust portfolios.
@@ -18,15 +18,15 @@ A RoboAdvisor is an automated platform that provides financial planning services
 
 ## *Tech Stack*
 - **Frontend**
-- React.js
-- Bootsrap CSS / Css
+ - React.js
+ - Bootsrap CSS / Css
 - **Back End**
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- React
-- Jquery
+ - Node.js
+ - Express.js
+ - MongoDB
+ - Mongoose
+ - React
+ - Jquery
 
 ## **Setup Instructions**
 ### **Prerequisites**
