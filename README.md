@@ -36,7 +36,7 @@ A RoboAdvisor is an automated platform that provides financial planning services
 ### **Steps to Run the Project**
 1. **Clone the Repository**:
 bash
-git clone git@github.com:Mercykemboi/DocumentStamping.git
+git clone git@github.com:Mercykemboi/RoboticsAdvisor.git
 cd DocumentStamping.git
 
 
