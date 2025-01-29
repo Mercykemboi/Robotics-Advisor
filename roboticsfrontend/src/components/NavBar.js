@@ -1,10 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate,useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../components/styles/navbar.css";
 
 
 const Navbar = () => {
+    const navigate = useNavigate(); // Initialize navigate function
+
+    const handleLoginClick = () => {
+      navigate("/login"); // Navigate to login page
+    };
+  
+    const handleSignUpClick = () => {
+      navigate("/register"); // Navigate to register page
+    };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark custom-navbar">
       <div className="container">
@@ -34,8 +43,8 @@ const Navbar = () => {
 
         {/* Login & Sign Up Buttons */}
         <div className="d-flex">
-          <a className="btn custom-btn me-2" href="#">Login</a>
-          <a className="btn custom-btn" href="#">Sign Up</a>
+          <button className="btn custom-btn me-2" onClick={handleLoginClick}>Login</button>
+          <button className="btn custom-btn"  onClick={handleSignUpClick}>Sign Up</button>
         </div>
       </div>
     </nav>
