@@ -1,8 +1,16 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {useNavigate } from "react-router-dom";
 import "./styles/Register.css" // Import styles
 
 const Register = () => {
+    const navigate = useNavigate();
+    const handleLoginClick = () => {
+        navigate("/login"); // Navigate to login page
+      };
+      const handleBackHome = () => {
+        navigate("/"); // Navigate to login page
+      };
   return (
     <div className="register-container">
       <div className="register-box">
@@ -27,9 +35,10 @@ const Register = () => {
           <button className="continue-btn">Continue</button>
 
           {/* Login Link */}
-          <p className="login-text">
-            Have an account? <span className="link">Log in</span>
+          <p className="login-text"> Already
+            Have an account? <span className="link" onClick={handleLoginClick}>Log in</span>
           </p>
+          <button className="login-text" onClick={handleBackHome}>Back Homepage</button>
         </div>
 
         {/* Right Section: Image & Text */}
