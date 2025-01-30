@@ -16,13 +16,13 @@ const Dashboard = () => {
   const [investments, setInvestments] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/dashboard").then((res) => {
-      setPortfolio(res.data.portfolio);
-      setMarketData(res.data.marketData);
-      setStocks(res.data.watchlist);
-      setSectors(res.data.sectors);
-      setInvestments(res.data.investments);
-    });
+    // axios.get("/dashboard").then((res) => {
+    //   setPortfolio(res.data.portfolio);
+    //   setMarketData(res.data.marketData);
+    //   setStocks(res.data.watchlist);
+    //   setSectors(res.data.sectors);
+    //   setInvestments(res.data.investments);
+    // });
   }, []);
 
   return (
