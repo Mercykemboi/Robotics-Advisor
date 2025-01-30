@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../components/styles/navbar.css";
 
@@ -33,7 +33,7 @@ const Navbar = () => {
         {/* Navbar Links - Centered */}
         <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
+            <li className="nav-item"><a className="nav-link" href="#hero">Home</a></li>
             <li className="nav-item"><a className="nav-link" href="#about">About Us</a></li>
             <li className="nav-item"><a className="nav-link" href="#services">Services</a></li>
             <li className="nav-item"><a className="nav-link" href="#features">Features</a></li>
