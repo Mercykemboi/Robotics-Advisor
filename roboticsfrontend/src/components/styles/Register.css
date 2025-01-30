@@ -137,4 +137,13 @@
       width: 100%;
     }
   }
+  select.input-field {
+    display: block; 
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
   
