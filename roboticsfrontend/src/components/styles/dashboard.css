@@ -1,0 +1,11 @@
+.dashboard-container {
+    padding: 20px;
+    background: #f5f6fa;
+    min-height: 100vh;
+margin-left: 250px;
+  }
+  
+  .dashboard-container h2 {
+    margin-bottom: 20px;
+  }
+  

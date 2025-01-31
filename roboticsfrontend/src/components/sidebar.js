@@ -1,21 +1,20 @@
 import React from "react";
-import { ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "./styles/sidebar.css"; // Custom styling
 
 const Sidebar = () => {
   return (
-    <div className="sidebar bg-light p-3">
-      <ListGroup>
-        <ListGroup.Item active>Dashboard</ListGroup.Item>
-        <ListGroup.Item>Portfolio</ListGroup.Item>
-        <ListGroup.Item>My Stock</ListGroup.Item>
-        <ListGroup.Item>Deposit</ListGroup.Item>
-        <ListGroup.Item>Insight</ListGroup.Item>
-        <ListGroup.Item>Market Stock</ListGroup.Item>
-        <ListGroup.Item>Market Bitcoin</ListGroup.Item>
-        <ListGroup.Item>News Update</ListGroup.Item>
-        <ListGroup.Item>Help Center</ListGroup.Item>
-        <ListGroup.Item>Settings</ListGroup.Item>
-      </ListGroup>
+    <div className="sidebar">
+      <h2 className="sidebar-title">Robo-Advisor</h2>
+      <ul className="sidebar-menu">
+        <li><Link to="/">🏠 Dashboard</Link></li>
+        <li><Link to="/wallet">💰 My Wallet</Link></li>
+        <li><Link to="/portfolio" >📑 Portfolio Management</Link></li>
+        <li><Link to="/transactions">📑 Transactions</Link></li>
+        <li><Link to="/investment">📈 Investment</Link></li>
+        <li><Link to="/reports">📊 Reports</Link></li>
+        <li><Link to="/settings">⚙️ Settings</Link></li>
+      </ul>
     </div>
   );
 };

@@ -1,0 +1,46 @@
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: calc(100% - 250px);
+    left: 250px;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .topbar-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .topbar-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    font-size: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .user-icon {
+    font-size: 28px;
+    margin-right: 10px;
+  }
+  
+  .username {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
