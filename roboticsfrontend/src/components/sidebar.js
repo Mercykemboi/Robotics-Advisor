@@ -14,6 +14,7 @@ const Sidebar = () => {
         <li><Link to="/investment">📈 Investment</Link></li>
         <li><Link to="/reports">📊 Reports</Link></li>
         <li><Link to="/settings">⚙️ Settings</Link></li>
+        <li><Link to="/settings">⚙️ Logout</Link></li>
       </ul>
     </div>
   );

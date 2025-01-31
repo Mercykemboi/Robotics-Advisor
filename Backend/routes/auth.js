@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { protect, authorizeRoles } = require("../middleware/middleware");
+const { protect, authorizeRoles, authProfile} = require("../middleware/middleware");
 
 const router = express.Router();
 
@@ -40,10 +40,11 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
+     
     res.cookie("token", token, { httpOnly: true });
-    res.json({ message: "Login successful", token });
+    res.json({ message: "Login successful",token,username:user.username,role:user.role });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -63,5 +64,33 @@ router.get("/dashboard", protect, (req, res) => {
 router.get("/admin", protect, authorizeRoles(["admin"]), (req, res) => {
   res.json({ message: "Welcome to the admin panel" });
 });
+
+// ✅ Fetch User Profile
+router.get("/profile", authProfile, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    console.log(user);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ✅ Update User Profile
+router.put("/profile", authProfile, async (req, res) => {
+  try {
+    const { username } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { username },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;

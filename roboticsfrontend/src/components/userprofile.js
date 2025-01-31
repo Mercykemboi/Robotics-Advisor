@@ -1,48 +1,51 @@
-import React, { useState } from "react";
-import "./styles/userprofile.css"; // Custom styles
+import React, { useState, useEffect } from "react";
+import { getUserProfile, updateUserProfile } from "../services/apis"; // ✅ Import API functions
+import "../components/styles/userprofile.css";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-  const [formData, setFormData] = useState({
-    name: "John Doe",
-    email: "john@example.com",
-    financialGoal: "Retirement",
-    riskTolerance: "Moderate",
-  });
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ username: "", email: "" });
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    getUserProfile()
+      .then((data) => setUser(data))
+      .catch((error) => console.error("Error fetching user data:", error));
+  }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const handleBackHome = () => {
+    navigate("/"); // Navigate to login page
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated Profile:", formData);
+    try {
+  
+      await updateUserProfile(user);
+      setMessage("Profile updated successfully!");
+    } catch (error) {
+      setMessage("Error updating profile.");
+    }
   };
 
   return (
     <div className="profile-container">
       <h2>👤 User Profile</h2>
+
+      {message && <p className="message">{message}</p>}
+
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} />
+        <label>Username:</label>
+        <input type="text" name="username" value={user.username} onChange={handleChange} />
 
-        <label>Email</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} disabled />
+        <label>Email:</label>
+        <input type="email" name="email" value={user.email} onChange={handleChange} disabled />
 
-        <label>Financial Goal</label>
-        <select name="financialGoal" value={formData.financialGoal} onChange={handleChange}>
-          <option value="Retirement">Retirement</option>
-          <option value="Education">Education</option>
-          <option value="Investment">Investment</option>
-        </select>
-
-        <label>Risk Tolerance</label>
-        <select name="riskTolerance" value={formData.riskTolerance} onChange={handleChange}>
-          <option value="Low">Low</option>
-          <option value="Moderate">Moderate</option>
-          <option value="High">High</option>
-        </select>
-
-        <button type="submit">Save Changes</button>
+        <button type="submit" onClick={handleBackHome}>Update Profile</button>
       </form>
     </div>
   );
