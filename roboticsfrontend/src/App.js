@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/Homepage";
 import TopBar from "./components/topbar";
 import PortfolioCard from "./components/portfolioCard";
+import UserProfile from "./components/userprofile";
 
 const App = () => {
   return (
@@ -23,11 +24,13 @@ const MainLayout = () => {
   // Check if the current route is the dashboard (or sub-pages within it)
   const isDashboardPage = location.pathname.startsWith("/dashboard");
 
+
   return (
+    
     <div className="app-container">
       {/* Show Navbar only on the Landing Page ("/") */}
+      
       {!isDashboardPage && <Navbar />}
-
       {/* Dashboard Layout (Sidebar + TopBar) */}
       {isDashboardPage && (
         <div className="dashboard-layout">
@@ -48,6 +51,7 @@ const MainLayout = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/portfolio" element={<PortfolioCard />} />
         </Routes>

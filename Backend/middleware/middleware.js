@@ -25,5 +25,21 @@ const authorizeRoles = (roles) => {
     next();
   };
 };
+  const authProfile = (req, res, next) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "") || req.cookies.token;
 
-module.exports = { protect, authorizeRoles };
+  if (!token) {
+    return res.status(401).json({ message: "No token, authorization denied" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // ✅ Attach user data to request
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+
+module.exports = { protect, authorizeRoles,authProfile };
