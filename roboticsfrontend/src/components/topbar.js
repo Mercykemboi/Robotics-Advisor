@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 const TopBar = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("Guest");
+  const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
+    setProfileImage(localStorage.getItem("profileImage") || "/images/default-avatar.png");
     if (storedUsername) {
       setUsername(storedUsername);
     }

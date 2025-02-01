@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const multer = require("multer");
 const { protect, authorizeRoles, authProfile} = require("../middleware/middleware");
 
 const router = express.Router();
@@ -42,7 +43,12 @@ router.post("/login", async (req, res) => {
     });
      
     res.cookie("token", token, { httpOnly: true });
-    res.json({ message: "Login successful",token,username:user.username,role:user.role });
+    res.json({ message: "Login successful",
+    token,
+    username:user.username,
+    role:user.role,
+    profileImage: user.profileImage ? `http://localhost:5000${user.profileImage}` : null, // ✅ Include image URL
+   });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
@@ -65,7 +71,21 @@ router.get("/admin", protect, authorizeRoles(["admin"]), (req, res) => {
   res.json({ message: "Welcome to the admin panel" });
 });
 
-// ✅ Fetch User Profile
+
+// ✅ Multer Configuration for Image Upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Save in "uploads" folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+// // ✅ Fetch User Profile
+
 router.get("/profile", authProfile, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -74,23 +94,39 @@ router.get("/profile", authProfile, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
-});
-
-// ✅ Update User Profile
-router.put("/profile", authProfile, async (req, res) => {
+});router.put("/profile", authProfile, upload.single("profileImage"), async (req, res) => {
   try {
     const { username } = req.body;
+    const updateFields = {};
+
+    if (username) updateFields.username = username;
+
+    if (req.file) {
+      updateFields.profileImage = `/uploads/${req.file.filename}`; // ✅ Save image path
+    }
+
+    console.log("📌 Received Username:", username);
+    console.log("📌 Received Profile Image:", req.file ? `✅ Image saved as ${updateFields.profileImage}` : "❌ No image uploaded");
+
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { username },
+      { $set: updateFields }, 
       { new: true }
     );
 
-    res.json(updatedUser);
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("✅ Updated User:", updatedUser);
+    res.json({ user: updatedUser });
+
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("❌ Profile Update Error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
 
 
 module.exports = router;
