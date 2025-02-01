@@ -9,6 +9,7 @@ import LandingPage from "./pages/Homepage";
 import TopBar from "./components/topbar";
 import PortfolioCard from "./components/portfolioCard";
 import UserProfile from "./components/userprofile";
+import FinancialGoals from "./components/financialGoal";
 
 const App = () => {
   return (
@@ -20,44 +21,50 @@ const App = () => {
 
 const MainLayout = () => {
   const location = useLocation();
-  
-  // Check if the current route is the dashboard (or sub-pages within it)
-  const isDashboardPage = location.pathname.startsWith("/dashboard");
 
+  // ✅ Show Navbar + LandingPage ONLY on `/`
+  if (location.pathname === "/") {
+    return <LandingPageLayout />;
+  }
 
+  // ✅ Show Dashboard Layout for `/dashboard`
+  if (location.pathname.startsWith("/dashboard")) {
+    return <DashboardLayout />;
+  }
+
+  // ✅ Show Other Pages Separately (Login, Register, Profile, etc.)
   return (
-    
-    <div className="app-container">
-      {/* Show Navbar only on the Landing Page ("/") */}
-      
-      {!isDashboardPage && <Navbar />}
-      {/* Dashboard Layout (Sidebar + TopBar) */}
-      {isDashboardPage && (
-        <div className="dashboard-layout">
-          <Sidebar />
-          <div className="dashboard-content">
-            <TopBar /> {/* Keep TopBar inside the dashboard layout */}
-            <div className="content">
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Routes>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Routes outside the Dashboard */}
-      {!isDashboardPage && (
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/portfolio" element={<PortfolioCard />} />
-        </Routes>
-      )}
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/financials" element={<FinancialGoals />} />
+      <Route path="/portfolio" element={<PortfolioCard />} />
+    </Routes>
   );
 };
+
+// ✅ Landing Page Layout
+const LandingPageLayout = () => (
+  <>
+    <Navbar />
+    <LandingPage />
+  </>
+);
+
+// ✅ Dashboard Layout (Sidebar + TopBar)
+const DashboardLayout = () => (
+  <div className="dashboard-layout">
+    <Sidebar />
+    <div className="dashboard-content">
+      <TopBar />
+      <div className="content">
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </div>
+  </div>
+);
 
 export default App;

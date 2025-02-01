@@ -1,7 +1,7 @@
 .profile-container {
-    width: 50%;
-    margin: 20px auto;
-    padding: 20px;
+    width: 40%;
+    margin: 50px auto;
+    padding: 30px;
     text-align: center;
     background: #fff;
     border-radius: 10px;
@@ -10,6 +10,23 @@
 
 h2 {
     margin-bottom: 20px;
+}
+
+.profile-picture {
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
 }
 
 form {
@@ -27,13 +44,23 @@ input, button {
 
 button {
     background: #007bff;
-    color: #fff;
-    border: none;
+    color: white;
     cursor: pointer;
+    border: none;
+    font-weight: bold;
 }
 
 button:hover {
     background: #0056b3;
+}
+
+.back-btn {
+    background: #6c757d;
+    margin-top: 10px;
+}
+
+.back-btn:hover {
+    background: #5a6268;
 }
 
 .message {
