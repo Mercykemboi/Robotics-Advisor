@@ -42,6 +42,10 @@ const FinancialGoals = () => {
   {
     navigate('/dashboard');
   }
+  const handleRisk = () =>
+  {
+    navigate('/risk');
+  }
 
   return (
     <div className="financial-goals-container">
@@ -88,6 +92,7 @@ const FinancialGoals = () => {
             {/* Goal Actions */}
             <div className="goal-actions">
               <button onClick={() => handleEditGoal(goal)}>✏️ Edit</button>
+              <button onClick={handleRisk}>Access Risk</button>
               <button onClick={() => handleDeleteGoal(goal._id)} className="delete-btn">🗑️ Delete</button>
             </div>
           </div>
