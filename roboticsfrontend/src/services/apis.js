@@ -133,3 +133,22 @@ export const deleteFinancialGoal = async (goalId) => {
   });
   return response.data;
 };
+
+
+// ✅ Fetch User Risk Tolerance
+export const getRiskTolerance = async () => {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${API_URL}/risk-tolerance`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Update User Risk Tolerance
+export const updateRiskTolerance = async (riskTolerance) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.put(`${API_URL}/risk-tolerance`, { riskTolerance }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};

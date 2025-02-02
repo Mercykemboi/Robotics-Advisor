@@ -128,5 +128,38 @@ router.get("/profile", authProfile, async (req, res) => {
 });
 
 
+// ✅ Get User Risk Tolerance
+router.get("/risk-tolerance", authProfile, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({ riskTolerance: user.riskTolerance });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// ✅ Update User Risk Tolerance
+router.put("/risk-tolerance", authProfile, async (req, res) => {
+  try {
+    const { riskTolerance } = req.body;
+    if (!["Low", "Medium", "High"].includes(riskTolerance)) {
+      return res.status(400).json({ message: "Invalid risk tolerance value" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { riskTolerance },
+      { new: true }
+    );
+
+    res.json({ message: "Risk tolerance updated", riskTolerance: updatedUser.riskTolerance });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
 
 module.exports = router;

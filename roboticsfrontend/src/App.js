@@ -10,6 +10,8 @@ import TopBar from "./components/topbar";
 import PortfolioCard from "./components/portfolioCard";
 import UserProfile from "./components/userprofile";
 import FinancialGoals from "./components/financialGoal";
+import RiskTolerance from "./components/Risk";
+
 
 const App = () => {
   return (
@@ -37,6 +39,7 @@ const MainLayout = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/risk" element ={<RiskTolerance/>}/>
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/financials" element={<FinancialGoals />} />
       <Route path="/portfolio" element={<PortfolioCard />} />

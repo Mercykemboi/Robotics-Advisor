@@ -10,6 +10,7 @@ const Sidebar = () => {
         <li><Link to="/">🏠 Dashboard</Link></li>
         <li><Link to="/financials">📈 Financial Goals</Link></li>
         <li><Link to="/portfolio" >📑 Portfolio Management</Link></li>
+        <li><Link to = "/risk">📑 Manage Your Risk</Link></li>
         <li><Link to="/transactions">📑 Transactions</Link></li>
         <li><Link to="/investment">📈 Investment</Link></li>
         <li><Link to="/reports">📊 Reports</Link></li>

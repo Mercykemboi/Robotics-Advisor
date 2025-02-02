@@ -1,0 +1,38 @@
+.risk-tolerance-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    color: #007bff;
+  }
+  
+  .risk-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .risk-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .selected {
+    border: 3px solid #007bff;
+  }
+  
+  .message {
+    margin-top: 15px;
+    color: #28a745;
+    font-weight: bold;
+  }
+  
