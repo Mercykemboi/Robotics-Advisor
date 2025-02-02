@@ -2,6 +2,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/auth";
 const GOALS_API_URL = "http://localhost:5000/api/financial-goals";
+const PORT_URL = "http://localhost:5000/api/portfolios";
+
 
 // Register User
 export const registerUser = async (userData) => {
@@ -152,3 +154,58 @@ export const updateRiskTolerance = async (riskTolerance) => {
   });
   return response.data;
 };
+
+// ✅ Create a New Portfolio
+export const createPortfolio = async (portfolioData) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(PORT_URL, portfolioData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Get User's Portfolios
+export const getPortfolios = async () => {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(PORT_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Update Portfolio
+export const updatePortfolioAssets = async (portfolioId, assets) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.put(`${PORT_URL}/${portfolioId}/assets`, { assets }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Delete Portfolio
+export const deletePortfolio = async (portfolioId) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.delete(`${PORT_URL}/${portfolioId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Fetch Portfolio Performance Data
+export const getPortfolioPerformance = async (portfolioId) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${PORT_URL}/${portfolioId}/performance`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// ✅ Update Portfolio Name
+export const updatePortfolio = async (portfolioId, updatedData) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.put(`${PORT_URL}/${portfolioId}`, updatedData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
