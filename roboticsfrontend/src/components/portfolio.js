@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getPortfolios, updatePortfolioAssets, deletePortfolio,createPortfolio } from "../services/apis";
+import { getPortfolios, getPortfolioPerformance, updatePortfolioAssets, deletePortfolio, createPortfolio } from "../services/apis";
 import "../components/styles/portfolio.css"; 
-import { FaChartLine, FaTrashAlt, FaEdit, FaSave,FaPlusCircle } from "react-icons/fa";
+import { FaChartLine, FaTrashAlt, FaEdit, FaSave, FaPlusCircle } from "react-icons/fa";
+import { Line } from "react-chartjs-2";
+import "chart.js/auto";
 import { useNavigate } from "react-router-dom";
 
 const Portfolio = () => {
@@ -9,12 +11,35 @@ const Portfolio = () => {
   const [newPortfolio, setNewPortfolio] = useState({ name: "" });
   const [portfolios, setPortfolios] = useState([]);
   const [editingPortfolio, setEditingPortfolio] = useState(null);
+  const [performanceData, setPerformanceData] = useState({});
 
   useEffect(() => {
     getPortfolios().then(setPortfolios);
   }, []);
 
-    const handleAddPortfolio = async () => {
+  // Fetch performance data for a selected portfolio
+  const fetchPerformanceData = async (portfolioId) => {
+    const data = await getPortfolioPerformance(portfolioId);
+    setPerformanceData(prevData => ({ ...prevData, [portfolioId]: data }));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      portfolios.forEach(async (portfolio) => {
+        const updatedPerformance = await getPortfolioPerformance(portfolio._id);
+        setPortfolios((prev) =>
+          prev.map((p) =>
+            p._id === portfolio._id ? { ...p, performance: updatedPerformance } : p
+          )
+        );
+      });
+    }, 30000); // Refresh every 30 seconds
+  
+    return () => clearInterval(interval);
+  }, [portfolios]);
+  
+
+  const handleAddPortfolio = async () => {
     if (!newPortfolio.name) return;
     const addedPortfolio = await createPortfolio(newPortfolio);
     setPortfolios([...portfolios, addedPortfolio]);
@@ -31,10 +56,9 @@ const Portfolio = () => {
     setEditingPortfolio({ ...editingPortfolio, assets: updatedAssets });
   };
 
-  
-
   const handleSaveChanges = async () => {
     if (!editingPortfolio) return;
+
     // Ensure total allocation does not exceed 100%
     const totalAllocation = editingPortfolio.assets.reduce((sum, asset) => sum + asset.allocation, 0);
     if (totalAllocation > 100) {
@@ -52,18 +76,17 @@ const Portfolio = () => {
     setPortfolios(portfolios.filter(p => p._id !== portfolioId));
   };
 
-  const handleDashboard = () =>
-  {
+  const handleDashboard = () => {
     navigate("/dashboard");
-  }
+  };
 
   return (
     <div className="portfolio-container">
-      <h2>📈 Portfolio Management</h2>
+      <h2>📈 Portfolio Management & Performance Tracking</h2>
 
-       {/* Portfolio Input Form */}
+      {/* Portfolio Input Form */}
       <div className="portfolio-form">
-         <input 
+        <input 
           type="text" 
           placeholder="Enter Portfolio Name" 
           value={newPortfolio.name} 
@@ -82,6 +105,31 @@ const Portfolio = () => {
             <FaChartLine className="portfolio-icon" />
             <h3>{portfolio.name}</h3>
             <p>Risk Level: <strong>{portfolio.riskTolerance}</strong></p>
+
+            {/* Fetch & Show Performance Data */}
+            <button onClick={() => fetchPerformanceData(portfolio._id)} className="performance-btn">
+              📊 View Performance
+            </button>
+            {performanceData[portfolio._id] ? (
+  <div className="performance-chart">
+    <h4>Performance Overview</h4>
+    <p>Current Value: ${performanceData[portfolio._id].totalValue.toFixed(2)}</p>
+    <Line 
+      data={{
+        labels: performanceData[portfolio._id].history.map(entry => new Date(entry.date).toLocaleDateString()),
+        datasets: [{
+          label: "Portfolio Value Over Time",
+          data: performanceData[portfolio._id].history.map(entry => entry.value),
+          borderColor: "#007bff",
+          fill: false,
+        }]
+      }}
+    />
+  </div>
+) : (
+  <p>📊 Fetching performance data...</p>
+)}
+
 
             {/* Asset List */}
             {editingPortfolio && editingPortfolio._id === portfolio._id ? (
@@ -124,12 +172,9 @@ const Portfolio = () => {
               </button>
             </div>
           </div>
-          
         ))}
       </div>
     </div>
-
-    
   );
 };
 

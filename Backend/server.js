@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:3000", credentials: true })); // ✅ Allow frontend
+app.use(cors({ origin: "http://localhost:3001", credentials: true })); // ✅ Allow frontend
 
 // Connect to MongoDB
 connectDB();
