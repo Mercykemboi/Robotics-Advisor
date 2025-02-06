@@ -159,6 +159,8 @@ router.get("/:id/performance", async (req, res) => {
     res.status(500).json({ message: "Error fetching portfolio performance" });
   }
 });
+
+
   
 
 module.exports = router;
