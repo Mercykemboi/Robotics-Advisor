@@ -139,4 +139,26 @@ const getMarketPrices = async () => {
     }
   });
 
+ 
+// ✅ Get Portfolio Performance Data
+router.get("/:id/performance", async (req, res) => {
+  try {
+    const portfolio = await Portfolio.findById(req.params.id);
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
+
+    // Simulate performance tracking data
+    const history = [
+      { date: "2024-01-01", value: 10000 },
+      { date: "2024-02-01", value: 10500 },
+      { date: "2024-03-01", value: 11000 },
+      { date: "2024-04-01", value: 12000 },
+    ];
+
+    res.json({ totalValue: history[history.length - 1].value, history });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching portfolio performance" });
+  }
+});
+  
+
 module.exports = router;
