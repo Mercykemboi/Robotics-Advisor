@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getPortfolios, getPortfolioPerformance, updatePortfolioAssets, deletePortfolio, createPortfolio } from "../services/apis";
 import "../components/styles/portfolio.css"; 
-import { FaChartLine, FaTrashAlt, FaEdit, FaSave, FaPlusCircle } from "react-icons/fa";
+import { FaChartLine, FaTrashAlt, FaEdit, FaSave, FaPlusCircle, FaFileDownload } from "react-icons/fa";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +37,6 @@ const Portfolio = () => {
   
     return () => clearInterval(interval);
   }, [portfolios]);
-  
 
   const handleAddPortfolio = async () => {
     if (!newPortfolio.name) return;
@@ -80,6 +79,30 @@ const Portfolio = () => {
     navigate("/dashboard");
   };
 
+  // Function to generate CSV report
+  const generateReport = (portfolio) => {
+    if (!performanceData[portfolio._id]) {
+      alert("No performance data available.");
+      return;
+    }
+
+    const csvHeaders = "Date,Portfolio Value\n";
+    const csvRows = performanceData[portfolio._id].history
+      .map(entry => `${new Date(entry.date).toLocaleDateString()},${entry.value}`)
+      .join("\n");
+
+    const csvContent = csvHeaders + csvRows;
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `${portfolio.name}_Report.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="portfolio-container">
       <h2>📈 Portfolio Management & Performance Tracking</h2>
@@ -111,27 +134,30 @@ const Portfolio = () => {
               📊 View Performance
             </button>
             {performanceData[portfolio._id] ? (
-  <div className="performance-chart">
-    <h4>Performance Overview</h4>
-    <p>Current Value: ${performanceData[portfolio._id].totalValue.toFixed(2)}</p>
-    <Line 
-      data={{
-        labels: performanceData[portfolio._id].history.map(entry => new Date(entry.date).toLocaleDateString()),
-        datasets: [{
-          label: "Portfolio Value Over Time",
-          data: performanceData[portfolio._id].history.map(entry => entry.value),
-          borderColor: "#007bff",
-          fill: false,
-        }]
-      }}
-    />
-  </div>
-) : (
-  <p>📊 Fetching performance data...</p>
-)}
+              <div className="performance-chart">
+                <h4>Performance Overview</h4>
+                <p>Current Value: ${performanceData[portfolio._id].totalValue.toFixed(2)}</p>
+                <Line 
+                  data={{
+                    labels: performanceData[portfolio._id].history.map(entry => new Date(entry.date).toLocaleDateString()),
+                    datasets: [{
+                      label: "Portfolio Value Over Time",
+                      data: performanceData[portfolio._id].history.map(entry => entry.value),
+                      borderColor: "#007bff",
+                      fill: false,
+                    }]
+                  }}
+                />
+              </div>
+            ) : (
+              <p>📊 Fetching performance data...</p>
+            )}
 
-
-            {/* Asset List */}
+            {/* Generate Report Button */}
+            <button onClick={() => generateReport(portfolio)} className="report-btn">
+              <FaFileDownload /> Generate Report
+            </button>
+                {/* Asset List */}
             {editingPortfolio && editingPortfolio._id === portfolio._id ? (
               <div className="assets-edit-container">
                 {editingPortfolio.assets.map((asset, index) => (
