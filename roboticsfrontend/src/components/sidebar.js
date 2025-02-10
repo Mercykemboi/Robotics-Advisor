@@ -11,7 +11,6 @@ const Sidebar = () => {
         <li><Link to="/financials">📈 Financial Goals</Link></li>
         <li><Link to="/portfolio" >📑 Portfolio Management</Link></li>
         <li><Link to = "/risk">📑 Manage Your Risk</Link></li>
-        <li><Link to="/reports">📊Ivestment Reports</Link></li>
         <li><Link to="/settings">⚙️ Settings</Link></li>
         <li><Link to="/">⚙️ Logout</Link></li>
       </ul>
