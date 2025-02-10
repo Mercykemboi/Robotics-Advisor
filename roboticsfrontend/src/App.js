@@ -13,6 +13,7 @@ import FinancialGoals from "./components/financialGoal";
 import RiskTolerance from "./components/Risk";
 import Portfolio from "./components/portfolio";
 import MarketData from "./components/marketData";
+import Notifications from "./components/notification";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const MainLayout = () => {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/financials" element={<FinancialGoals />} />
       <Route path="/portfolio" element={<PortfolioCard />} />
+      <Route path="/notifications" element={<Notifications />} />
       <Route path="/market" element={<MarketData symbol="AAPL" />} />
     </Routes>
   );

@@ -1,0 +1,23 @@
+.notifications-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .notifications-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .notifications-container li {
+    background: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
