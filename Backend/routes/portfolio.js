@@ -1,5 +1,6 @@
 const express = require("express");
 const Portfolio = require("../models/portfolio");
+const Notification = require("../models/notifications");
 const User = require("../models/user");
 const { authProfile } = require("../middleware/middleware");
 
@@ -32,8 +33,8 @@ router.post("/", authProfile, async (req, res) => {
     
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const riskTolerance = user.riskTolerance || "Medium"; // Default to Medium
-    const assets = defaultAllocations[riskTolerance]; // ✅ Assign default assets
+    const riskTolerance = user.riskTolerance || "Medium"; 
+    const assets = defaultAllocations[riskTolerance]; 
 
     const newPortfolio = new Portfolio({
       user: req.user.id,
@@ -41,9 +42,20 @@ router.post("/", authProfile, async (req, res) => {
       riskTolerance,
       assets,
     });
+    
 
     await newPortfolio.save();
+    // ✅ Create a Notification
+    const newNotification = new Notification({
+      user: req.user.id,
+      message: `Your new portfolio "${name}" has been created successfully.`,
+      type: "portfolio", 
+      read: false, // Mark it as unread
+    });
+
+    await newNotification.save(); // ✅ Save notification to DB
     res.status(201).json(newPortfolio);
+ 
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -77,6 +89,10 @@ router.put("/:id/assets", authProfile, async (req, res) => {
       );
   
       if (!updatedPortfolio) return res.status(404).json({ message: "Portfolio not found" });
+      await Notification.create({
+        user: req.user.id,
+        message: `Your portfolio "${updatedPortfolio.name}" was updated.`,
+      });
   
       res.json(updatedPortfolio);
     } catch (error) {

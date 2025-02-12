@@ -55,11 +55,9 @@ const HistoricalData = () => {
 
       {/* Dropdown to Select Stock Symbol */}
       <select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
-        <option value="TSLA">Tesla (TSLA)</option>
-        <option value="AAPL">Apple (AAPL)</option>
-        <option value="GOOGL">Google (GOOGL)</option>
-        <option value="AMZN">Amazon (AMZN)</option>
-        <option value="MSFT">Microsoft (MSFT)</option>
+        <option value="GOOGL">Google </option>
+        <option value="AMZN">Amazon </option>
+        <option value="MSFT">Microsoft </option>
       </select>
 
       {/* Chart Display */}
