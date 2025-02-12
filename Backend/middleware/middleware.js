@@ -25,6 +25,7 @@ const authorizeRoles = (roles) => {
     next();
   };
 };
+
   const authProfile = (req, res, next) => {
   const token = req.header("Authorization")?.replace("Bearer ", "") || req.cookies.token;
 

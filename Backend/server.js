@@ -11,6 +11,7 @@ const cors = require("cors");
 const http = require("http");  // ✅ Required for Socket.IO
 const { Server } = require("socket.io");  // ✅ Import Socket.IO
 const notificationRoutes = require("../Backend/routes/notifications");
+const admin = require("../Backend/routes/admin")
 
 const app = express();
 const server = http.createServer(app); // ✅ Create HTTP Server
@@ -61,6 +62,7 @@ app.use("/api/financial-goals", financialGoalsRoutes);
 app.use("/api/portfolios", portfolioRoutes);
 app.use("/api/market", marketDataRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/admin", admin);
 
 // ✅ Export the `sendNotification` function for use in other files
 module.exports = { sendNotification };
