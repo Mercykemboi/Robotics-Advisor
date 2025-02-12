@@ -1,10 +1,10 @@
 import React from "react";
-import { FaChartLine, FaUsers, FaRobot } from "react-icons/fa"; // Import icons
+import { FaChartLine, FaUsers, FaRobot } from "react-icons/fa"; 
 
 const LandingPage = () => {
   return (
     <>
-      {/* Hero Section - Full Screen */}
+      
       <section
         className="container-fluid d-flex align-items-center text-center"
         id="hero"
@@ -34,7 +34,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Key Features Section with Box Shadow */}
+    
       <section className="container mt-5 text-center" id="services">
         <h2 className="fw-bold display-5 mb-4">Key Features</h2>
         <div className="row">
@@ -56,7 +56,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* About Us Section - More Visual Appeal */}
+      
       <section className="container mt-5 text-center" id="about">
         <h2 className="fw-bold display-5 mb-4">About Us</h2>
         <div className="row align-items-center">
@@ -77,7 +77,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer (Hidden on Main Page Initially) */}
+      
       <footer className="bg-dark text-light text-center py-3 mt-5 d-none d-md-block">
         <p>&copy; 2025 RoboAdvisor. All Rights Reserved.</p>
       </footer>
