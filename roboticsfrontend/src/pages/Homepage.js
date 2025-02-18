@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaChartLine, FaUsers, FaRobot } from "react-icons/fa"; 
 
 const LandingPage = () => {
@@ -36,25 +37,27 @@ const LandingPage = () => {
 
     
       <section className="container mt-5 text-center" id="services">
-        <h2 className="fw-bold display-5 mb-4">Key Features</h2>
-        <div className="row">
-          {[
-            { title: "User Authentication & Profiles", desc: "Secure login with financial goals tracking.", icon: <FaUsers /> },
-            { title: "Portfolio Management", desc: "Automated asset allocation based on user risk.", icon: <FaChartLine /> },
-            { title: "Market Data Integration", desc: "Real-time market insights for investment decisions.", icon: <FaRobot /> },
-            { title: "Performance Tracking", desc: "Track and analyze portfolio growth over time.", icon: <FaChartLine /> },
-            { title: "Reporting & Notifications", desc: "Get reports and alerts on investment changes.", icon: <FaUsers /> },
-          ].map((feature, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card p-4 shadow-sm border-0" style={{ borderRadius: "12px" }}>
+      <h2 className="fw-bold display-5 mb-4">Key Features</h2>
+      <div className="row">
+        {[
+          { title: "User Authentication & Profiles", desc: "Secure login with financial goals tracking.", icon: <FaUsers />, link: "/register" },
+          { title: "Portfolio Management", desc: "Automated asset allocation based on user risk.", icon: <FaChartLine />, link: "/portfolio" },
+          { title: "Market Data Integration", desc: "Real-time market insights for investment decisions.", icon: <FaRobot />, link: "/market" },
+          { title: "Performance Tracking", desc: "Track and analyze portfolio growth over time.", icon: <FaChartLine />, link: "/performance" },
+          { title: "Reporting & Notifications", desc: "Get reports and alerts on investment changes.", icon: <FaUsers />, link: "/reports" },
+        ].map((feature, index) => (
+          <div key={index} className="col-md-4 mb-4">
+            <Link to={feature.link} className="text-decoration-none">
+              <div className="card p-4 shadow-sm border-0" style={{ borderRadius: "12px", cursor: "pointer" }}>
                 <div className="text-primary fs-1 mb-3">{feature.icon}</div>
-                <h4>{feature.title}</h4>
+                <h4 className="text-dark">{feature.title}</h4>
                 <p className="text-muted">{feature.desc}</p>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </section>
 
       
       <section className="container mt-5 text-center" id="about">
