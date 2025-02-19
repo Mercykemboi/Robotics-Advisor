@@ -15,6 +15,8 @@ import Portfolio from "./components/portfolio";
 import MarketData from "./components/marketData";
 import Notifications from "./components/notification";
 import AdminPanel from "./components/admin";
+import Unauthorized from "./components/unauthorized";
+import ProtectedRoute from "./components/protectedroute";
 
 
 const App = () => {
@@ -49,7 +51,14 @@ const MainLayout = () => {
       <Route path="/financials" element={<FinancialGoals />} />
       <Route path="/portfolio" element={<PortfolioCard />} />
       <Route path="/notifications" element={<Notifications />} />
-      <Route path="/admin" element={<AdminPanel />} />
+      {/* <Route path="/admin" element={<AdminPanel />} /> */}
+       {/* Protect the Admin Route */}
+       <Route element={<ProtectedRoute requiredRole="admin" />}>
+          <Route path="/admin" element={<AdminPanel />} />
+        </Route>
+
+        {/* Unauthorized Access Page */}
+        <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/market" element={<MarketData symbol="AAPL" />} />
     </Routes>
   );

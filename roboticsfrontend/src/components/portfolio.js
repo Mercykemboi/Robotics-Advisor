@@ -5,6 +5,8 @@ import { FaChartLine, FaTrashAlt, FaEdit, FaSave, FaPlusCircle, FaFileDownload }
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -80,7 +82,7 @@ const Portfolio = () => {
   };
 
   // Function to generate CSV report
-  const generateReport = (portfolio) => {
+  const generateCSVReport = (portfolio) => {
     if (!performanceData[portfolio._id]) {
       alert("No performance data available.");
       return;
@@ -101,6 +103,33 @@ const Portfolio = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  // Function to generate PDF report
+  const generatePDFReport = (portfolio) => {
+    if (!performanceData[portfolio._id]) {
+      alert("No performance data available.");
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text(`${portfolio.name} Performance Report`, 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+
+    const tableData = performanceData[portfolio._id].history.map(entry => [
+      new Date(entry.date).toLocaleDateString(),
+      entry.value,
+    ]);
+
+    doc.autoTable({
+      head: [["Date", "Portfolio Value"]],
+      body: tableData,
+      startY: 40,
+    });
+
+    doc.save(`${portfolio.name}_Report.pdf`);
   };
 
   return (
@@ -152,11 +181,10 @@ const Portfolio = () => {
             ) : (
               <p>📊 Fetching performance data...</p>
             )}
-
-            {/* Generate Report Button */}
-            <button onClick={() => generateReport(portfolio)} className="report-btn">
-              <FaFileDownload /> Generate Report
-            </button>
+            <div>
+            <button onClick={() => generateCSVReport(portfolio)} className="report-btn"> <FaFileDownload />Download In CSV</button>
+            </div>
+            <button onClick={() => generatePDFReport(portfolio)}className="report-btn" > <FaFileDownload />Download In PDF</button>
                 {/* Asset List */}
             {editingPortfolio && editingPortfolio._id === portfolio._id ? (
               <div className="assets-edit-container">
