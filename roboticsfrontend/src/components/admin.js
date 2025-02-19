@@ -141,13 +141,7 @@ const AdminPanel = () => {
 
       {/* Analytics Cards */}
       <h4>Analytics Dashboard</h4>
-      <Card>
-        <Card.Body>
-          <Card.Title>User Growth</Card.Title>
-          <Card.Text>{userGrowth} new users in the last 30 days</Card.Text>
-        </Card.Body>
-      </Card>
-
+    
       <Card>
         <Card.Body>
           <Card.Title>System Performance</Card.Title>
