@@ -17,8 +17,10 @@ const Login = () => {
       console.log(formData);
       await loginUser(formData);
       console.log("login successfully");
+      alert("login successfully")
       navigate("/dashboard"); // Redirect after successful registration
     } catch (err) {
+      alert('Invalid login credentials')
       setError(err);
     }
   };
